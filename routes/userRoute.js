@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../model/userModel");
-const { createUser } = require("../controller/userController");
+const { createUser, fetchUser } = require("../controller/userController");
 
 const router = express.Router();
 router.use(express.json());
@@ -12,8 +12,12 @@ router.use(express.urlencoded({ extended: false }));
 
 //Adding a product
 
-//user login
+//Adding user
 router.post("/createuser", createUser);
+//fetching all users
+router.get("/fetchuser", fetchUser);
+//For login API
+//router.post("/loginuser", loginUser);
 
 module.exports = router;
 
