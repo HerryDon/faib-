@@ -31,30 +31,50 @@ const fetchUser = async (req, res) => {
       }
 };
 
-// const loginUser = async (req, res) => {
-//       const { email, password } = req.body;
-//       try {
-//             const user = await User.findOne({ email });
-//             if (!user) {
-//                   return res.status(400).json({ success: false, message: "User not found" });
-//             }
+// Login user
+const loginUser = async (req, res) => {
+      const { email, password } = req.body;
 
-//             const isMatch = await user.comparePassword(password);
-//             if (!isMatch) {
-//                   return res.status(400).json({ success: false, message: "Invalid credentials" });
-//             }
+      if (!email || !password) {
+            return res.status(400).json({ success: false, message: "Email and password are required" });
+      }
 
-//             const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
-//             res.json({
-//                   success: true,
-//                   user: { _id: user._id, email: user.email, name: user.name },
-//                   token,
-//             });
-//       } catch (error) {
-//             res.status(500).json({ success: false, message: "Server error" });
-//       }
-// };
+      try {
+            const user = await User.findOne({ email });
+            if (!user) {
+                  return res.status(400).json({ success: false, message: "User not found" });
+            }
+
+            console.log("User found:", user.email);
+            const isMatch = await user.comparePassword(password);
+            console.log("Password match:", isMatch);
+
+            if (!isMatch) {
+                  return res.status(400).json({ success: false, message: "Invalid credentials" });
+            }
+
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+            const userResponse = {
+                  _id: user._id,
+                  name: user.name,
+                  email: user.email,
+                  phone: user.phone,
+                  password: user.password,
+            };
+
+            res.status(200).json({
+                  success: true,
+                  user: userResponse,
+                  token,
+            });
+      } catch (error) {
+            console.error("Login error:", error);
+            res.status(500).json({ success: false, message: "Server error", error: error.message });
+      }
+};
 
 
 
-module.exports = { createUser, fetchUser };
+
+module.exports = { createUser, fetchUser, loginUser };

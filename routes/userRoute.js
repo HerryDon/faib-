@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../model/userModel");
-const { createUser, fetchUser } = require("../controller/userController");
+const { createUser, fetchUser, loginUser } = require("../controller/userController");
 
 const router = express.Router();
 router.use(express.json());
@@ -17,7 +17,7 @@ router.post("/createuser", createUser);
 //fetching all users
 router.get("/fetchuser", fetchUser);
 //For login API
-//router.post("/loginuser", loginUser);
+router.post("/loginuser", loginUser);
 
 module.exports = router;
 
