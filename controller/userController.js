@@ -6,8 +6,8 @@ const jwt = require("jsonwebtoken");
 //Create a new user
 const createUser = async (req, res) => {
       try {
-            const { name, phone, email, password } = req.body;
-            const user = await User.create({ name, phone, email, password });
+            const { firstName, lastName, phone, email, password } = req.body;
+            const user = await User.create({ firstName, lastName, phone, email, password });
             if (user) {
                   res.status(200).json(user);
                   console.log(user);
@@ -57,10 +57,11 @@ const loginUser = async (req, res) => {
 
             const userResponse = {
                   _id: user._id,
-                  name: user.name,
+                  firstName: user.firstName,
+                  lastName: user.lastName,
                   email: user.email,
                   phone: user.phone,
-                  password: user.password,
+
             };
 
             res.status(200).json({
