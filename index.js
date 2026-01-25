@@ -3,6 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors"); // more setting of different IP's is found in cores express
 const errorMiddleware = require("./middleware/errorMiddleware");
+const path = require("path");
+const authenticateToken = require("./middleware/authenticateToken");
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
@@ -26,7 +28,7 @@ mongoose
       .connect(MONGO_URL,)
       .then(() => {
             console.log("db connected successfully");
-           // console.log("Current database:", mongoose.connection.db.databaseName); to check the data base name you are using
+            // console.log("Current database:", mongoose.connection.db.databaseName); to check the data base name you are using
       })
       .catch((err) => console.error("Connection error:", err));
 
@@ -37,9 +39,12 @@ app.get("/", (req, res) => {
 
 //routes
 const userRoute = require("./routes/userRoute");
+const imageRoute = require("./routes/imageRoute");
+
 
 //api routes
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/image", imageRoute);
 
 //middleware
 app.use(errorMiddleware); // In this case it must be placed under the routes api's
