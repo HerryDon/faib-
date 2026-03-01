@@ -53,7 +53,7 @@ const loginUser = async (req, res) => {
                   return res.status(400).json({ success: false, message: "Invalid credentials" });
             }
 
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "9h" });
 
             const userResponse = {
                   _id: user._id,
@@ -61,7 +61,6 @@ const loginUser = async (req, res) => {
                   lastName: user.lastName,
                   email: user.email,
                   phone: user.phone,
-
             };
 
             res.status(200).json({
@@ -74,7 +73,6 @@ const loginUser = async (req, res) => {
             res.status(500).json({ success: false, message: "Server error", error: error.message });
       }
 };
-
 
 
 

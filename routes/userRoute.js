@@ -1,6 +1,7 @@
 const express = require("express");
 const User = require("../model/userModel");
 const { createUser, fetchUser, loginUser } = require("../controller/userController");
+const authenticateToken = require("../middleware/authenticateToken");
 
 const router = express.Router();
 router.use(express.json());

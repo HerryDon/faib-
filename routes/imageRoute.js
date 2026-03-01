@@ -1,31 +1,28 @@
 const express = require("express");
-const { Image } = require("../model/imageModel");
-const { uploadImages } = require("../controller/imageController");
+const { uploadImages, fetchImages } = require("../controller/imageController");
 const multer = require("multer");
-const path = require("path");
-const authenticateToken = require("../middleware/authenticateToken");
+const path = require('path');
+// const authenticateToken = require("../middleware/authenticateToken");
 
 
 
 const router = express.Router();
 router.use(express.json());
 
-const storage = multer.diskStorage({
-      destination: function (req, file, cb) {
-            cb(null, "uploads/");
-      },
-      filename: function (req, file, cb) {
-            cb(null, Date.now() + path.extname(file.originalname)); // Appending extension
-      }
-});
 
-const upload = multer({ storage });
+const storage = multer.diskStorage({
+      destination: (req, file, cb) => {
+            cb(null, 'uploads/')
+      }
+})
+const upload = multer({ storage: storage });
 
 //allowing url encoding
 router.use(express.urlencoded({ extended: false }));
 
 //upload images
-router.post("/upload", authenticateToken, upload.array("images"), uploadImages);//get bookings
+router.post("/uploadImages", upload.array('images'), uploadImages);
+router.get("/fetchImages", fetchImages);
 
 //Retreiving the images based on category
 // router.get("/images/:category", authenticateToken, async (req, res) => {});

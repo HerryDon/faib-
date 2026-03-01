@@ -1,11 +1,19 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
-// JWT Middleware
 const authenticateToken = (req, res, next) => {
-      const token = req.headers['authorization']?.split(' ')[1];
-      if (!token) return res.sendStatus(401);
+      const authHeader = req.headers['authorization'];
+      const token = authHeader && authHeader.split(' ')[1];
+
+      if (!token) {
+            console.log('No token provided');
+            return res.sendStatus(401);
+      }
+
       jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-            if (err) return res.sendStatus(403);
+            if (err) {
+                  console.error('JWT Verification Error:', err);
+                  return res.sendStatus(403);
+            }
             req.user = user;
             next();
       });
