@@ -31,6 +31,28 @@ const fetchUser = async (req, res) => {
       }
 };
 
+//Fetching a single user by ID
+const fetchSingle = async (req, res) => {
+      try {
+            const { id } = req.params;
+
+            if (!mongoose.Types.ObjectId.isValid(id)) {
+                  return res.status(400).json({ success: false, message: "Invalid user ID format" });
+            }
+
+            const user = await User.findById(id);
+
+            if (!user) {
+                  return res.status(404).json({ success: false, message: "User not found" });
+            }
+
+            res.status(200).json({ success: true, user });
+      } catch (error) {
+            console.error("Error fetching user:", error);
+            res.status(500).json({ success: false, message: "Error fetching user", error: error.message });
+      }
+};
+
 // Login user
 const loginUser = async (req, res) => {
       const { email, password } = req.body;
@@ -47,7 +69,7 @@ const loginUser = async (req, res) => {
 
             console.log("User found:", user.email);
             const isMatch = await user.comparePassword(password);
-            console.log("Password match:", isMatch);
+            console.log("Password match:", isMatch); x
 
             if (!isMatch) {
                   return res.status(400).json({ success: false, message: "Invalid credentials" });
@@ -76,4 +98,4 @@ const loginUser = async (req, res) => {
 
 
 
-module.exports = { createUser, fetchUser, loginUser };
+module.exports = { createUser, fetchUser, loginUser, fetchSingle };

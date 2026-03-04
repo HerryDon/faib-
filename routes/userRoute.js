@@ -1,6 +1,6 @@
 const express = require("express");
 const User = require("../model/userModel");
-const { createUser, fetchUser, loginUser } = require("../controller/userController");
+const { createUser, fetchUser, loginUser, fetchSingle } = require("../controller/userController");
 const authenticateToken = require("../middleware/authenticateToken");
 
 const router = express.Router();
@@ -19,6 +19,8 @@ router.post("/createuser", createUser);
 router.get("/fetchuser", fetchUser);
 //For login API
 router.post("/loginuser", loginUser);
+//For fetching user by ID
+router.get("/:id", fetchSingle);
 
 module.exports = router;
 
