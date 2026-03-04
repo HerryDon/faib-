@@ -80,7 +80,7 @@ const loginUser = async (req, res) => {
             const userResponse = {
                   _id: user._id,
                   firstName: user.firstName,
-                  lastName: user.lastName,
+                  secondName: user.secondName,
                   email: user.email,
                   phone: user.phone,
             };
