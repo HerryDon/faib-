@@ -57,26 +57,46 @@ const fetchSingle = async (req, res) => {
 const loginUser = async (req, res) => {
       const { email, password } = req.body;
 
+      // Validate input
       if (!email || !password) {
-            return res.status(400).json({ success: false, message: "Email and password are required" });
+            return res.status(400).json({
+                  success: false,
+                  message: "Email and password are required"
+            });
       }
 
       try {
+            // Find the user by email
             const user = await User.findOne({ email });
             if (!user) {
-                  return res.status(400).json({ success: false, message: "User not found" });
+                  return res.status(401).json({
+                        success: false,
+                        message: "Invalid email or password"
+                  });
             }
 
-            console.log("User found:", user.email);
+            // Check if the password is correct
             const isMatch = await user.comparePassword(password);
-            console.log("Password match:", isMatch); x
-
             if (!isMatch) {
-                  return res.status(400).json({ success: false, message: "Invalid credentials" });
+                  return res.status(401).json({
+                        success: false,
+                        message: "Invalid email or password"
+                  });
             }
 
-            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "9h" });
+            // Check if JWT_SECRET is set
+            if (!process.env.JWT_SECRET) {
+                  throw new Error("JWT_SECRET is not defined in the environment variables");
+            }
 
+            // Generate JWT token
+            const token = jwt.sign(
+                  { id: user._id },
+                  process.env.JWT_SECRET,
+                  { expiresIn: "9h" }
+            );
+
+            // Prepare user response
             const userResponse = {
                   _id: user._id,
                   firstName: user.firstName,
@@ -85,14 +105,21 @@ const loginUser = async (req, res) => {
                   phone: user.phone,
             };
 
+            // Send success response
             res.status(200).json({
                   success: true,
+                  message: "Login successful",
                   user: userResponse,
                   token,
             });
+
       } catch (error) {
             console.error("Login error:", error);
-            res.status(500).json({ success: false, message: "Server error", error: error.message });
+            res.status(500).json({
+                  success: false,
+                  message: "Server error",
+                  error: error.message
+            });
       }
 };
 
