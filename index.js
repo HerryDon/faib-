@@ -40,11 +40,13 @@ app.get("/", (req, res) => {
 //routes
 const userRoute = require("./routes/userRoute");
 const imageRoute = require("./routes/imageRoute");
+const serviceRoute = require("./routes/serviceRoute");
 
 
 //api routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/image", imageRoute);
+app.use("/api/v1/service", serviceRoute)
 
 //middleware
 app.use(errorMiddleware); // In this case it must be placed under the routes api's
