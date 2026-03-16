@@ -5,6 +5,7 @@ const upload = require("../middleware/upload");
 const router = express.Router();
 router.use(express.json());
 
+const multer = require("multer"); //for 
 
 //allowing url encoding
 router.use(express.urlencoded({ extended: false }));

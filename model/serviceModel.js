@@ -22,14 +22,8 @@ const serviceSchema = new mongoose.Schema({
       },
 
       discount: {
-            type: String
+            type: Number
       },
-
-      image: [
-            {
-                  type: String
-            }
-      ],
 
       images: [
             {

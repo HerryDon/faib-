@@ -5,14 +5,13 @@ const { Service } = require("../model/serviceModel");
 const createService = async (req, res) => {
 
       try {
-            const { name, category, price, description, discount, image, images } = req.body;
+            const { name, category, price, description, discount, images } = req.body;
             const service = await Service.create({
                   name,
                   category,
                   price,
                   description,
                   discount,
-                  image,
                   images,
             });
             if (service) {
