@@ -20,7 +20,7 @@ router.get("/fetchuser", fetchUser);
 //For login API
 router.post("/loginuser", loginUser);
 //For fetching user by ID
-router.get("/:id", fetchSingle);
+router.get("/fetchSingle/:id", fetchSingle);
 
 module.exports = router;
 
