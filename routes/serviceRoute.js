@@ -1,5 +1,5 @@
 const express = require("express");
-const { createService, getServiceByCategory, fetchAllServices, getServiceById, getRandomServices } = require("../controller/serviceController")
+const { createService, getServiceByCategory, fetchAllServices, getServiceById, getRandomServices, getRandomServicesByCategory } = require("../controller/serviceController")
 const upload = require("../middleware/upload");
 
 const router = express.Router();
@@ -11,7 +11,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 //Creating service
-router.post("/createService", upload.array("images", 6), createService);
+router.post("/createService", upload.array("images", 5), createService);
 //Fetching service by category
 router.get("/getServiceByCategory/:category", getServiceByCategory);
 //Fetching All services
@@ -20,6 +20,8 @@ router.get("/fetchAllServices", fetchAllServices);
 router.get("/getServiceById/:id", getServiceById);
 //Fetching services randomly
 router.get("/getRandomServices", getRandomServices);
+//Fecthing random services by Category
+router.get("/getRandomServicesByCategory/:category", getRandomServicesByCategory);
 
 
 
