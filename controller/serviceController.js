@@ -106,18 +106,27 @@ const getRandomServices = async (req, res) => {
 const getRandomServicesByCategory = async (req, res) => {
       try {
             const { category } = req.params;
+            const limit = parseInt(req.query.limit);
 
-            // Use MongoDB aggregation to filter by category and sample randomly
             const randomServices = await Service.aggregate([
-                  { $match: { category: category } },
-                  //  { $sample: { size: 6 } }
-            ])
-            res.status(200).json(randomServices);
+                  { $match: { category } },
+                  { $sample: { size: limit } }
+            ]);
+
+            res.status(200).json({
+                  success: true,
+                  services: randomServices,
+            });
       } catch (error) {
-            console.error("Error fecthing random services by category:", error);
-            res.status(500).json({ message: 'Error fecthing random services by category', error: error.message });
+            console.error("Error fetching random services by category:", error);
+            res.status(500).json({
+                  success: false,
+                  message: 'Error fetching random services by category',
+                  error: error.message,
+            });
       }
-}
+};
+
 
 
 
