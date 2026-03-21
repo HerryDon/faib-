@@ -1,5 +1,5 @@
 const express = require("express");
-const { createService, getServiceByCategory, fetchAllServices, getServiceById, getRandomServices, getRandomServicesByCategory } = require("../controller/serviceController")
+const { createService, getServiceByCategory, fetchAllServices, getServiceById, getRandomServices, getRandomServicesByCategory, getTwoPerCategory } = require("../controller/serviceController")
 const upload = require("../middleware/upload");
 
 const router = express.Router();
@@ -22,6 +22,8 @@ router.get("/getServiceById/:id", getServiceById);
 router.get("/getRandomServices", getRandomServices);
 //Fecthing random services by Category
 router.get("/getRandomServicesByCategory/:category", getRandomServicesByCategory);
+//Fetch two in each Category. Its used in the fronted under Top Trending
+router.get("/getTwoPerCategory", getTwoPerCategory)
 
 
 

@@ -109,7 +109,7 @@ const getRandomServicesByCategory = async (req, res) => {
             const limit = parseInt(req.query.limit);
 
             const randomServices = await Service.aggregate([
-                  { $match: { category } },
+                  { $match: { category: category } },
                   { $sample: { size: limit } }
             ]);
 
@@ -128,6 +128,32 @@ const getRandomServicesByCategory = async (req, res) => {
 };
 
 
+//Fetch two in each Category. Its used in the fronted under Top Trending
+const getTwoPerCategory = async (req, res) => {
+      try {
+            const fetchTwo = await Service.distinct("category");
+
+            const result = await Promise.all(
+                  fetchTwo.map(async (fet) => {
+                        const randomServices = await Service.aggregate([
+                              { $match: { category: fet } },
+                              { $sample: { size: 2 } }
+                        ]);
+                        return { category: fet, services: randomServices };
+                  })
+            );
+            res.status(200).json(result);
+
+      } catch (error) {
+            console.error("Error fetching two random services by category:", error);
+            res.status(500).json({
+                  success: false,
+                  message: 'Error fetching two random services by category',
+                  error: error.message,
+            });
+      }
+}
 
 
-module.exports = { createService, getServiceByCategory, fetchAllServices, getServiceById, getRandomServices, getRandomServicesByCategory }
+
+module.exports = { createService, getServiceByCategory, fetchAllServices, getServiceById, getRandomServices, getRandomServicesByCategory, getTwoPerCategory }
