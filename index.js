@@ -41,6 +41,7 @@ app.get("/", (req, res) => {
 const userRoute = require("./routes/userRoute");
 const imageRoute = require("./routes/imageRoute");
 const serviceRoute = require("./routes/serviceRoute");
+const bookingRoute = require("./routes/bookingRoute");
 
 
 //api routes
