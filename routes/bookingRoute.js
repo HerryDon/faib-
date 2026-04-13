@@ -1,15 +1,20 @@
 const express = require("express");
-const { newBooking } = require("../controller/bookingController");
-const upload = require("../middleware/upload");
-
 const router = express.Router();
-router.use(express.json());
+const {
+      createBooking,
+      getUserBookings,
+      getBookingById,
+      deleteBooking,
+} = require("../controller/bookingController");
 
-//allowing url encoding
-router.use(express.urlencoded({ extended: false }));
+// POST   /api/v1/booking/createBooking       → create a new booking
+// GET    /api/v1/booking/myBookings          → get all bookings for logged-in user
+// GET    /api/v1/booking/:id                 → get a single booking by ID
+// DELETE /api/v1/booking/:id                 → cancel/delete a booking
 
-//Creating Booking Summary
-router.post("/newBooking", upload.array("images", 5), newBooking);
-
+router.post("/createBooking", createBooking);
+router.get("/myBookings", getUserBookings);
+router.get("/:id", getBookingById);
+router.delete("/:id", deleteBooking);
 
 module.exports = router;
