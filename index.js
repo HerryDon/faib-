@@ -47,7 +47,8 @@ const bookingRoute = require("./routes/bookingRoute");
 //api routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/image", imageRoute);
-app.use("/api/v1/service", serviceRoute)
+app.use("/api/v1/service", serviceRoute);
+app.use("/api/v1/booking", bookingRoute);
 
 //middleware
 app.use(errorMiddleware); // In this case it must be placed under the routes api's
