@@ -16,7 +16,7 @@ const createBooking = async (req, res) => {
             const { id: userId, email, firstName, lastName, phone } = decoded;
 
 
-            const { serviceId, serviceName, serviceCategory, serviceDescription, serviceDiscount, bookingDate, bookingTime, cost, duration, images } = req.body;
+            const { serviceId, serviceName, serviceCategory, serviceDescription, serviceDiscount, bookingDate, bookingTime, specialRequest, cost, duration, images } = req.body;
 
             // Validate required fields
             if (!bookingDate || !bookingTime) {
@@ -39,6 +39,7 @@ const createBooking = async (req, res) => {
                   serviceDiscount,
                   bookingDate,
                   bookingTime,
+                  specialRequest,
                   cost,
                   duration,
                   images,

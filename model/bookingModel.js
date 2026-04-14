@@ -48,14 +48,6 @@ const bookingSchema = new mongoose.Schema({
             type: Number,
             required: true,
       },
-      bookingDate: {
-            type: Date,
-            required: true,
-      },
-      bookingTime: {
-            type: String,
-            required: true,
-      },
       cost: {
             type: Number,
             required: true,
@@ -67,6 +59,19 @@ const bookingSchema = new mongoose.Schema({
             type: [String],
             ref: "Service",
       },
+      bookingDate: {
+            type: Date,
+            required: true,
+      },
+      bookingTime: {
+            type: String,
+            required: true,
+      },
+      specialRequest: {
+            type: String,
+            required: false,
+      },
+
       createdAt: {
             type: Date,
             default: Date.now,
