@@ -13,8 +13,11 @@ const createBooking = async (req, res) => {
             const token = authHeader.split(" ")[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
             const userId = decoded.id;
+            const email = decoded.email;
+            const firstName = decoded.firstName;
+            const lastName = decoded.lastName;
 
-            const { serviceId, bookingDate, bookingTime, email, cost, duration, images } = req.body;
+            const { serviceId, bookingDate, bookingTime, cost, duration, images } = req.body;
 
             // Validate required fields
             if (!bookingDate || !bookingTime) {
@@ -26,10 +29,12 @@ const createBooking = async (req, res) => {
 
             const booking = await Booking.create({
                   userId,
+                  email,
+                  firstName,
+                  lastName,
                   serviceId,
                   bookingDate,
                   bookingTime,
-                  email,
                   cost,
                   duration,
                   images,
