@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { serialize } = require("node:v8");
+
 
 
 const bookingSchema = new mongoose.Schema({
@@ -32,7 +32,7 @@ const bookingSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Service",
       },
-      ServiceName: {
+      serviceName: {
             type: String,
             required: true,
       },
