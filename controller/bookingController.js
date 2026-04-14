@@ -13,10 +13,8 @@ const createBooking = async (req, res) => {
             const token = authHeader.split(" ")[1];
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-            const userId = decoded.id;
-            const email = decoded.email;
-            const firstName = decoded.firstName;
-            const lastName = decoded.lastName;
+            const { id: userId, email, firstName, lastName, phone } = decoded;
+
 
             const { serviceId, serviceName, serviceCategory, serviceDescription, serviceDiscount, bookingDate, bookingTime, cost, duration, images } = req.body;
 
@@ -33,6 +31,7 @@ const createBooking = async (req, res) => {
                   email,
                   firstName,
                   lastName,
+                  phone,
                   serviceId,
                   serviceName,
                   serviceCategory,

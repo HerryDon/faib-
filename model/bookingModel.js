@@ -11,17 +11,18 @@ const bookingSchema = new mongoose.Schema({
       },
       email: {
             type: String,
-            ref: "User",
             required: true,
       },
       firstName: {
             type: String,
-            ref: "User",
             required: true,
       },
       lastName: {
             type: String,
-            ref: "User",
+            required: true,
+      },
+      phone: {
+            type: String,
             required: true,
       },
 
@@ -33,15 +34,19 @@ const bookingSchema = new mongoose.Schema({
       },
       ServiceName: {
             type: String,
+            required: true,
       },
       serviceCategory: {
             type: String,
+            required: true,
       },
       serviceDescription: {
             type: String,
+            required: true,
       },
       serviceDiscount: {
             type: Number,
+            required: true,
       },
       bookingDate: {
             type: Date,
@@ -53,6 +58,7 @@ const bookingSchema = new mongoose.Schema({
       },
       cost: {
             type: Number,
+            required: true,
       },
       duration: {
             type: String,
