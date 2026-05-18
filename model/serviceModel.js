@@ -32,7 +32,12 @@ const serviceSchema = new mongoose.Schema({
       ],
       createdAt: {
             type: Date,
-            default: Date.now,
+            default: Date,
+            default: () => {
+                  const now = new Date();
+                  now.setHours(now.getHours() + 3);
+                  return now;
+            }
       },
 
 });

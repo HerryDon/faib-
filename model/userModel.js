@@ -7,7 +7,15 @@ const UserSchema = new mongoose.Schema({
       phone: { type: String, required: true },
       email: { type: String, required: true, unique: true },
       password: { type: String, required: true },
-      createdAt: { type: Date, default: Date.now },
+      createdAt: {
+            type: Date,
+            default: Date,
+            default: () => {
+                  const now = new Date();
+                  now.setHours(now.getHours() + 3);
+                  return now;
+            }
+      },
 });
 
 
@@ -15,7 +23,7 @@ const UserSchema = new mongoose.Schema({
 UserSchema.pre("save", async function (next) {
       if (!this.isModified("password")) return next();
       this.password = await bcrypt.hash(this.password, 12);
-      
+
 });
 
 // Method to compare passwords
