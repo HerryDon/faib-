@@ -77,7 +77,7 @@ const bookingSchema = new mongoose.Schema({
             default: Date,
             default: () => {
                   const now = new Date();
-                  now.setHours(now.getHours() + 6);
+                  now.setHours(now.getHours() + 3);
                   return now;
             }
       },
