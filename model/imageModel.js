@@ -36,7 +36,12 @@ const imageSchema = new mongoose.Schema({
       },
       createdAt: {
             type: Date,
-            default: Date.now,
+            default: Date,
+            default: () => {
+                  const now = new Date();
+                  now.setHours(now.getHours() + 6);
+                  return now;
+            }
       },
       // Group ID to tie multiple views together
       // groupId: {
@@ -57,7 +62,7 @@ const imageSchema = new mongoose.Schema({
       //       },
       // ],
 
-      
+
 });
 
 const Image = mongoose.model('Image', imageSchema);

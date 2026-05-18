@@ -35,7 +35,7 @@ const serviceSchema = new mongoose.Schema({
             default: Date,
             default: () => {
                   const now = new Date();
-                  now.setHours(now.getHours() + 3);
+                  now.setHours(now.getHours() + 6);
                   return now;
             }
       },
